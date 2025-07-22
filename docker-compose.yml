@@ -1,0 +1,100 @@
+networks:
+  net-iomywiab-converting:
+    name: net-iomywiab-converting
+    external: false
+
+services:
+  php-8.1-debug:
+    container_name: php-8.1-debug-iomywiab-converting
+    image: iomywiab-php-8.1-cli-debug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+    working_dir: /opt/project
+
+  php-8.1-nodebug:
+    container_name: php-8.1-nodebug-iomywiab-converting
+    image: iomywiab-php-8.1-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+    working_dir: /opt/project
+
+  php-8.2-debug:
+    container_name: php-8.2-debug-iomywiab-converting
+    image: iomywiab-php-8.2-cli-debug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+    working_dir: /opt/project
+
+  php-8.2-nodebug:
+    container_name: php-8.2-nodebug-iomywiab-converting
+    image: iomywiab-php-8.2-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+    working_dir: /opt/project
+
+  php-8.3-debug:
+    container_name: php-8.3-debug-iomywiab-converting
+    image: iomywiab-php-8.3-cli-debug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+    working_dir: /opt/project
+
+  php-8.3-nodebug:
+    container_name: php-8.3-nodebug-iomywiab-converting
+    image: iomywiab-php-8.3-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+    working_dir: /opt/project
+
+  php-8.4-debug:
+    container_name: php-8.4-debug-iomywiab-converting
+    image: iomywiab-php-8.4-cli-debug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+    working_dir: /opt/project
+
+  php-8.4-nodebug:
+    container_name: php-8.4-nodebug-iomywiab-converting
+    image: iomywiab-php-8.4-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+    working_dir: /opt/project
+
+  phpstan:
+    container_name: phpstan-iomywiab-converting
+    image: iomywiab-php-8.1-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project
+    working_dir: /opt/project
+
+  composer:
+    container_name: composer-iomywiab-converting
+    image: iomywiab-php-8.1-cli-nodebug:latest
+    networks:
+      - net-iomywiab-converting
+    volumes:
+      - ./:/opt/project/
+      - ./composer-auth.json:/root/.composer/auth.json:ro
+    working_dir: /opt/project

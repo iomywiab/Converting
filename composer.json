@@ -1,0 +1,67 @@
+{
+    "name": "iomywiab/converting",
+    "type": "library",
+    "description": "PHP composer library for type conversions",
+    "keywords": [
+        "conversion",
+        "converting",
+        "type"
+    ],
+    "homepage": "https://github.com/iomywiab/converting",
+    "minimum-stability": "stable",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "iomywiab",
+            "email": "u1.iomywiab@secana.de"
+        }
+    ],
+    "require": {
+        "php": ">=8.1, <=8.5"
+    },
+    "require-dev": {
+        "iomywiab/testing": "^1.1",
+        "friendsofphp/php-cs-fixer": "*",
+        "nunomaduro/collision": "*",
+        "pdepend/pdepend": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "phpmd/phpmd": "*",
+        "phpmetrics/phpmetrics": "*",
+        "phpstan/extension-installer": "*",
+        "phpstan/phpstan": "*",
+        "phpstan/phpstan-deprecation-rules": "*",
+        "phpstan/phpstan-phpunit": "*",
+        "phpstan/phpstan-strict-rules": "*",
+        "phpstan/phpstan-symfony": "*",
+        "phpunit/phpunit": "*",
+        "psalm/plugin-phpunit": "*",
+        "roave/security-advisories": "dev-latest@dev",
+        "sebastian/phpcpd": "*",
+        "shipmonk/composer-dependency-analyser": "*",
+        "shipmonk/phpstan-baseline-per-identifier": "*",
+        "shipmonk/phpstan-rules": "*",
+        "voku/phpstan-rules": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iomywiab\\Library\\Converting\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Iomywiab\\Tests\\Converting\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/iomywiab/testing"
+        }
+    ]
+}
