@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: ConvertTest.php
  * Project: Converting
- * Modified at: 22/07/2025, 23:04
+ * Modified at: 22/07/2025, 23:41
  * Modified by: pnehls
  */
 
@@ -89,8 +89,8 @@ class ConvertTest extends TestCase
             [true, new \DateTime('1970-01-01', $timezone), '1970-01-01T00:00:00+00:00'],
             [true, new \DateTime('2025-06-26', $timezone), '2025-06-26T00:00:00+00:00'],
             [true, Enum4Testing::ONE, 'ONE'],
-            [true, IntEnum4Testing::ONE, '1'],
-            [true, StringEnum4Testing::ONE, 'One'],
+            [true, IntEnum4Testing::ONE, 'ONE'],
+            [true, StringEnum4Testing::ONE, 'ONE'],
             [true, new Stringable4Testing(), 'stringable'],
             [true, new ToString4Testing(), 'string'],
 
@@ -133,7 +133,7 @@ class ConvertTest extends TestCase
     {
         $this->expectException(MissingConvertImplementationException::class);
 
-        Convert::toDate('invalid');
+        Convert::toDatetime('invalid');
     }
 
     /**
