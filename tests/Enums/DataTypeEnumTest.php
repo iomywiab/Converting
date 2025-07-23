@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnumTest.php
  * Project: Converting
- * Modified at: 22/07/2025, 23:09
+ * Modified at: 23/07/2025, 19:51
  * Modified by: pnehls
  */
 
@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Iomywiab\Tests\Converting\Enums;
 
 use Iomywiab\Library\Converting\Enums\DataTypeEnum;
-use Iomywiab\Library\Converting\Exceptions\UnknownGetTypeTypeException;
 use Iomywiab\Library\Testing\DataTypes\Enum4Testing;
 use Iomywiab\Library\Testing\DataTypes\IntEnum4Testing;
 use Iomywiab\Library\Testing\DataTypes\Stringable4Testing;
@@ -85,7 +84,6 @@ class DataTypeEnumTest extends TestCase
     }
 
     /**
-     * @throws UnknownGetTypeTypeException
      * @throws \Exception
      * @dataProvider provideDataForCases
      */
@@ -122,7 +120,6 @@ class DataTypeEnumTest extends TestCase
     }
 
     /**
-     * @throws UnknownGetTypeTypeException
      */
     public function testFromValueForClosedResource(): void
     {
@@ -135,7 +132,6 @@ class DataTypeEnumTest extends TestCase
     }
 
     /**
-     * @throws UnknownGetTypeTypeException
      */
     public function testFromValueForResource(): void
     {

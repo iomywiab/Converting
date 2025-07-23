@@ -3,15 +3,13 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnum.php
  * Project: Converting
- * Modified at: 22/07/2025, 23:08
+ * Modified at: 23/07/2025, 19:09
  * Modified by: pnehls
  */
 
 declare(strict_types=1);
 
 namespace Iomywiab\Library\Converting\Enums;
-
-use Iomywiab\Library\Converting\Exceptions\UnknownGetTypeTypeException;
 
 enum DataTypeEnum: string
 {
@@ -52,7 +50,8 @@ enum DataTypeEnum: string
     ];
 
     /**
-     * @throws UnknownGetTypeTypeException
+     * @param mixed $value
+     * @return self
      */
     public static function fromData(mixed $value): self
     {
@@ -63,28 +62,20 @@ enum DataTypeEnum: string
 
     /**
      * @param non-empty-string $getTypeType
-     * @throws UnknownGetTypeTypeException
+     * @return self
      */
     public static function fromGetType(string $getTypeType): self
     {
-        if (isset(self::GETTYPE_TO_SELF[$getTypeType])) {
-            return self::GETTYPE_TO_SELF[$getTypeType];
-        }
-
-        throw new UnknownGetTypeTypeException($getTypeType);
+        return self::GETTYPE_TO_SELF[$getTypeType] ?? self::UNKNOWN;
     }
 
     /**
      * @param non-empty-string $serializeMarker
-     * @throws UnknownGetTypeTypeException
+     * @return self
      */
     public static function fromSerialize(string $serializeMarker): self
     {
-        if (isset(self::SERIALIZE_TO_SELF[$serializeMarker])) {
-            return self::SERIALIZE_TO_SELF[$serializeMarker];
-        }
-
-        throw new UnknownGetTypeTypeException($serializeMarker);
+        return self::SERIALIZE_TO_SELF[$serializeMarker] ?? self::UNKNOWN;
     }
 
     /**
@@ -107,6 +98,20 @@ enum DataTypeEnum: string
     }
 
     /**
+     * @return bool
+     */
+    public function isScalar(): bool
+    {
+        return match ($this) {
+            self::BOOLEAN,
+            self::FLOAT,
+            self::INTEGER,
+            self::STRING => true,
+            default => false,
+        };
+    }
+
+    /**
      * @return non-empty-string
      */
     public function toGetTypeType(): string
@@ -115,10 +120,9 @@ enum DataTypeEnum: string
     }
 
     /**
-     * @return non-empty-string
-     * @throws \Exception
+     * @return non-empty-string|null
      */
-    public function toSerializeMarker(): string
+    public function toSerializeMarker(): ?string
     {
         return match ($this) {
             self::ARRAY => 'a',
@@ -129,7 +133,7 @@ enum DataTypeEnum: string
             self::OBJECT => 'O',
             self::RESOURCE, self::RESOURCE_CLOSED => 'R',
             self::STRING => 's',
-            self::UNKNOWN => throw new \Exception('An unknown type cannot be serialized, therefore no serialize marker is defined'),
+            self::UNKNOWN => null,
         };
     }
 }

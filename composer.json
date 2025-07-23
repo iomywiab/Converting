@@ -20,7 +20,7 @@
         "php": ">=8.1, <=8.5"
     },
     "require-dev": {
-        "iomywiab/testing": "^1.1",
+        "iomywiab/testing": "^1.2",
         "friendsofphp/php-cs-fixer": "*",
         "nunomaduro/collision": "*",
         "pdepend/pdepend": "*",

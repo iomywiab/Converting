@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: Convert.php
  * Project: Converting
- * Modified at: 22/07/2025, 23:39
+ * Modified at: 23/07/2025, 21:58
  * Modified by: pnehls
  */
 
@@ -13,48 +13,97 @@ namespace Iomywiab\Library\Converting;
 
 use Iomywiab\Library\Converting\Enums\DataTypeEnum;
 use Iomywiab\Library\Converting\Exceptions\ConvertException;
-use Iomywiab\Library\Converting\Exceptions\MissingConvertImplementationException;
+use Iomywiab\Library\Converting\Exceptions\ConvertExceptionInterface;
 
 /**
  * Class to convert between different types (mostly scalars).
- * Please note: This is not for formatting
+ * Please note: This is not for formatting, just for converting
  * @see Format
  */
-class Convert
+class Convert implements ConvertInterface
 {
     private const DEFAULT_ARRAY_SEPARATOR = ',';
+    public const FALSE_STRING = 'false';
+    public const NULL_STRING = 'null';
+    public const TRUE_STRING = 'true';
 
     /**
-     * @throws MissingConvertImplementationException
-     * @noinspection PhpUnusedParameterInspection
+     * @inheritDoc
      */
-    public static function toBool(mixed $value): float
+    public static function toBool(mixed $value): bool
     {
-        throw new MissingConvertImplementationException(__METHOD__);
+        $type = DataTypeEnum::fromData($value);
+
+        return match ($type) {
+            DataTypeEnum::BOOLEAN => $value,
+            DataTypeEnum::FLOAT => (0.0 !== $value),
+            DataTypeEnum::INTEGER => (0 !== $value),
+            DataTypeEnum::NULL => false,
+            DataTypeEnum::STRING => match ($value) {
+                self::TRUE_STRING => true,
+                self::FALSE_STRING => false,
+                default => throw new ConvertException($value, DataTypeEnum::BOOLEAN),
+            },
+            DataTypeEnum::ARRAY,
+            DataTypeEnum::OBJECT,
+            DataTypeEnum::RESOURCE,
+            DataTypeEnum::RESOURCE_CLOSED,
+            DataTypeEnum::UNKNOWN => throw new ConvertException($value, DataTypeEnum::BOOLEAN),
+        };
     }
 
     /**
-     * @throws MissingConvertImplementationException
-     * @noinspection PhpUnusedParameterInspection
+     * @inheritDoc
      */
-    public static function toDatetime(mixed $value): float
+    public static function toDatetime(mixed $value): \DateTimeInterface
     {
-        throw new MissingConvertImplementationException(__METHOD__);
+        try {
+            $type = DataTypeEnum::fromData($value);
+
+            return match ($type) {
+                DataTypeEnum::INTEGER => (new \DateTime())->setTimestamp($value),
+                DataTypeEnum::OBJECT => ($value instanceof \DateTimeInterface) ? $value : throw new ConvertException($value, \DateTimeInterface::class),
+                DataTypeEnum::STRING => new \DateTime($value),
+                DataTypeEnum::ARRAY,
+                DataTypeEnum::BOOLEAN,
+                DataTypeEnum::FLOAT,
+                DataTypeEnum::NULL,
+                DataTypeEnum::RESOURCE,
+                DataTypeEnum::RESOURCE_CLOSED,
+                DataTypeEnum::UNKNOWN => throw new ConvertException($value, \DateTimeInterface::class),
+            };
+        } catch (ConvertExceptionInterface $forward) {
+            throw $forward;
+        } catch (\Throwable $cause) {
+            throw new ConvertException($value, \DateTimeInterface::class, $cause);
+        }
     }
 
     /**
-     * @throws MissingConvertImplementationException
-     * @noinspection PhpUnusedParameterInspection
+     * @inheritDoc
      */
     public static function toFloat(mixed $value): float
     {
-        throw new MissingConvertImplementationException(__METHOD__);
+        $type = DataTypeEnum::fromData($value);
+
+        return match ($type) {
+            DataTypeEnum::BOOLEAN => $value ? 1.0 : 0.0,
+            DataTypeEnum::FLOAT => $value,
+            DataTypeEnum::INTEGER => (float)$value,
+            DataTypeEnum::STRING => \is_numeric($value) ? (float)$value : throw new ConvertException($value, DataTypeEnum::FLOAT),
+            DataTypeEnum::NULL => 0.0,
+            DataTypeEnum::ARRAY,
+            DataTypeEnum::OBJECT,
+            DataTypeEnum::RESOURCE,
+            DataTypeEnum::RESOURCE_CLOSED,
+            DataTypeEnum::UNKNOWN => throw new ConvertException($value, DataTypeEnum::FLOAT),
+        };
     }
 
     /**
      * @param array<array-key,mixed> $array
      * @param null|non-empty-string $arraySeparator
-     * @throws ConvertException
+     * @throws ConvertExceptionInterface
      */
     private static function arrayToString(array $array, null|string $arraySeparator = null): string
     {
@@ -69,10 +118,7 @@ class Convert
     }
 
     /**
-     * @param mixed $value
-     * @param non-empty-string|null $arraySeparator
-     * @return string
-     * @throws ConvertException
+     * @inheritDoc
      */
     public static function toString(mixed $value, null|string $arraySeparator = null): string
     {
@@ -80,17 +126,19 @@ class Convert
             $type = DataTypeEnum::fromData($value);
 
             return match ($type) {
-                DataTypeEnum::ARRAY => /** @var array<array-key,mixed> $value */ self::arrayToString($value, $arraySeparator),
-                DataTypeEnum::BOOLEAN => /** @var bool $value */ (bool)$value ? 'true' : 'false',
+                DataTypeEnum::ARRAY => self::arrayToString($value, $arraySeparator),
+                DataTypeEnum::BOOLEAN => $value ? self::TRUE_STRING : self::FALSE_STRING,
                 DataTypeEnum::FLOAT,
                 DataTypeEnum::INTEGER,
                 DataTypeEnum::STRING => /** @var float|int|string $value */ (string)$value,
-                DataTypeEnum::NULL => 'NULL',
+                DataTypeEnum::NULL => self::NULL_STRING,
                 DataTypeEnum::OBJECT => /** @var object $value */ self::objectToString($value),
                 DataTypeEnum::RESOURCE,
                 DataTypeEnum::RESOURCE_CLOSED,
                 DataTypeEnum::UNKNOWN => throw new ConvertException($value, DataTypeEnum::STRING),
             };
+        } catch (ConvertExceptionInterface $forward) {
+            throw $forward;
         } catch (\Throwable $cause) {
             throw new ConvertException($value, DataTypeEnum::STRING, $cause);
         }
@@ -115,7 +163,7 @@ class Convert
     }
 
     /**
-     * @throws ConvertException
+     * @throws ConvertExceptionInterface
      */
     private static function objectToInt(object $value): int
     {
@@ -128,7 +176,7 @@ class Convert
     }
 
     /**
-     * @throws ConvertException
+     * @inheritDoc
      */
     public static function toInt(mixed $value): int
     {
@@ -136,7 +184,7 @@ class Convert
             $type = DataTypeEnum::fromData($value);
 
             return match ($type) {
-                DataTypeEnum::BOOLEAN => /** @var bool $value */ ((bool)$value) ? 1 : 0,
+                DataTypeEnum::BOOLEAN => /** @var bool $value */ $value ? 1 : 0,
                 DataTypeEnum::FLOAT => /** @var float $value */ match (true) {
                     (\floor($value) === $value) => (int)$value,
                     default => throw new ConvertException($value, DataTypeEnum::INTEGER),
@@ -150,12 +198,11 @@ class Convert
                 DataTypeEnum::OBJECT => /** @var object $value */ self::objectToInt($value),
                 DataTypeEnum::ARRAY,
                 DataTypeEnum::RESOURCE,
-                DataTypeEnum::RESOURCE_CLOSED => throw new ConvertException($value, DataTypeEnum::STRING),
-
-                default => throw new MissingConvertImplementationException(__METHOD__)
+                DataTypeEnum::RESOURCE_CLOSED,
+                DataTypeEnum::UNKNOWN => throw new ConvertException($value, DataTypeEnum::STRING),
             };
-        } catch (ConvertException $cause) {
-            throw $cause;
+        } catch (ConvertExceptionInterface $forward) {
+            throw $forward;
         } catch (\Throwable $cause) {
             throw new ConvertException($value, DataTypeEnum::STRING, $cause);
         }
