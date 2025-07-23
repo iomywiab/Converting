@@ -57,11 +57,5 @@
             "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/iomywiab/testing"
-        }
-    ]
+    }
 }
