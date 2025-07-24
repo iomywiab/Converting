@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnum.php
  * Project: Converting
- * Modified at: 23/07/2025, 19:09
+ * Modified at: 24/07/2025, 12:46
  * Modified by: pnehls
  */
 
@@ -117,6 +117,24 @@ enum DataTypeEnum: string
     public function toGetTypeType(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @return non-empty-string|null
+     */
+    public function toPhpDocName(): ?string
+    {
+        return match ($this) {
+            self::ARRAY => 'array',
+            self::BOOLEAN => 'bool',
+            self::FLOAT => 'float',
+            self::INTEGER => 'int',
+            self::NULL => 'null',
+            self::OBJECT => 'object',
+            self::RESOURCE, 'resource',
+            self::STRING => 'string',
+            self::UNKNOWN => null,
+        };
     }
 
     /**
