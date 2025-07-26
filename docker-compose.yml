@@ -11,7 +11,8 @@ services:
       - net-iomywiab-converting
     volumes:
       - ./:/opt/project
-      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+      - ./tmp/phpstorm/coverage/:/opt/phpstorm-coverage/
+      - ./config/xdebug.ini/:/usr/local/etc/php/conf.d/xdebug.ini
     working_dir: /opt/project
 
   php-8.1-nodebug:
@@ -30,7 +31,8 @@ services:
       - net-iomywiab-converting
     volumes:
       - ./:/opt/project
-      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+      - ./tmp/phpstorm/coverage/:/opt/phpstorm-coverage/
+      - ./config/xdebug.ini/:/usr/local/etc/php/conf.d/xdebug.ini
     working_dir: /opt/project
 
   php-8.2-nodebug:
@@ -49,7 +51,8 @@ services:
       - net-iomywiab-converting
     volumes:
       - ./:/opt/project
-      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+      - ./tmp/phpstorm/coverage/:/opt/phpstorm-coverage/
+      - ./config/xdebug.ini/:/usr/local/etc/php/conf.d/xdebug.ini
     working_dir: /opt/project
 
   php-8.3-nodebug:
@@ -68,7 +71,8 @@ services:
       - net-iomywiab-converting
     volumes:
       - ./:/opt/project
-      - ./temp/phpstorm-coverage:/opt/phpstorm-coverage
+      - ./tmp/phpstorm/coverage/:/opt/phpstorm-coverage/
+      - ./config/xdebug.ini/:/usr/local/etc/php/conf.d/xdebug.ini
     working_dir: /opt/project
 
   php-8.4-nodebug:

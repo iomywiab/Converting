@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: Convert.php
  * Project: Converting
- * Modified at: 23/07/2025, 21:58
+ * Modified at: 26/07/2025, 13:33
  * Modified by: pnehls
  */
 
@@ -34,6 +34,7 @@ class Convert implements ConvertInterface
     {
         $type = DataTypeEnum::fromData($value);
 
+        // @phpstan-ignore return.type
         return match ($type) {
             DataTypeEnum::BOOLEAN => $value,
             DataTypeEnum::FLOAT => (0.0 !== $value),
@@ -42,7 +43,9 @@ class Convert implements ConvertInterface
             DataTypeEnum::STRING => match ($value) {
                 self::TRUE_STRING => true,
                 self::FALSE_STRING => false,
-                default => throw new ConvertException($value, DataTypeEnum::BOOLEAN),
+                default => \is_numeric($value)
+                    ? self::toBool((float)$value)
+                    : throw new ConvertException($value, DataTypeEnum::BOOLEAN),
             },
             DataTypeEnum::ARRAY,
             DataTypeEnum::OBJECT,
@@ -61,8 +64,10 @@ class Convert implements ConvertInterface
             $type = DataTypeEnum::fromData($value);
 
             return match ($type) {
+                // @phpstan-ignore argument.type
                 DataTypeEnum::INTEGER => (new \DateTime())->setTimestamp($value),
                 DataTypeEnum::OBJECT => ($value instanceof \DateTimeInterface) ? $value : throw new ConvertException($value, \DateTimeInterface::class),
+                // @phpstan-ignore argument.type
                 DataTypeEnum::STRING => new \DateTime($value),
                 DataTypeEnum::ARRAY,
                 DataTypeEnum::BOOLEAN,
@@ -86,9 +91,12 @@ class Convert implements ConvertInterface
     {
         $type = DataTypeEnum::fromData($value);
 
+        // @phpstan-ignore return.type
         return match ($type) {
+            // @phpstan-ignore ternary.condNotBoolean
             DataTypeEnum::BOOLEAN => $value ? 1.0 : 0.0,
             DataTypeEnum::FLOAT => $value,
+            // @phpstan-ignore cast.double
             DataTypeEnum::INTEGER => (float)$value,
             DataTypeEnum::STRING => \is_numeric($value) ? (float)$value : throw new ConvertException($value, DataTypeEnum::FLOAT),
             DataTypeEnum::NULL => 0.0,
@@ -126,12 +134,16 @@ class Convert implements ConvertInterface
             $type = DataTypeEnum::fromData($value);
 
             return match ($type) {
+                // @phpstan-ignore argument.type
                 DataTypeEnum::ARRAY => self::arrayToString($value, $arraySeparator),
+                // @phpstan-ignore ternary.condNotBoolean
                 DataTypeEnum::BOOLEAN => $value ? self::TRUE_STRING : self::FALSE_STRING,
                 DataTypeEnum::FLOAT,
                 DataTypeEnum::INTEGER,
+                    // @phpstan-ignore cast.string
                 DataTypeEnum::STRING => /** @var float|int|string $value */ (string)$value,
                 DataTypeEnum::NULL => self::NULL_STRING,
+                // @phpstan-ignore argument.type
                 DataTypeEnum::OBJECT => /** @var object $value */ self::objectToString($value),
                 DataTypeEnum::RESOURCE,
                 DataTypeEnum::RESOURCE_CLOSED,
@@ -151,6 +163,7 @@ class Convert implements ConvertInterface
      */
     private static function objectToString(object $object): string
     {
+        // @phpstan-ignore return.type
         return match (true) {
             $object instanceof \DateTimeInterface => $object->format(\DateTimeInterface::ATOM),
             $object instanceof \UnitEnum => $object->name,
@@ -167,6 +180,7 @@ class Convert implements ConvertInterface
      */
     private static function objectToInt(object $value): int
     {
+        // @phpstan-ignore return.type
         return match (true) {
             $value instanceof \DateTime => $value->getTimestamp(),
             $value instanceof \BackedEnum && \is_int($value->value) => $value->value, // $value instanceof \IntBackedEnum -> false PHP 8.1
@@ -183,9 +197,12 @@ class Convert implements ConvertInterface
         try {
             $type = DataTypeEnum::fromData($value);
 
+            // @phpstan-ignore return.type
             return match ($type) {
+                // @phpstan-ignore ternary.condNotBoolean
                 DataTypeEnum::BOOLEAN => /** @var bool $value */ $value ? 1 : 0,
                 DataTypeEnum::FLOAT => /** @var float $value */ match (true) {
+                    // @phpstan-ignore argument.type
                     (\floor($value) === $value) => (int)$value,
                     default => throw new ConvertException($value, DataTypeEnum::INTEGER),
                 },
@@ -195,6 +212,7 @@ class Convert implements ConvertInterface
                     default => throw new ConvertException($value, DataTypeEnum::INTEGER)
                 },
                 DataTypeEnum::NULL => 0,
+                // @phpstan-ignore argument.type
                 DataTypeEnum::OBJECT => /** @var object $value */ self::objectToInt($value),
                 DataTypeEnum::ARRAY,
                 DataTypeEnum::RESOURCE,

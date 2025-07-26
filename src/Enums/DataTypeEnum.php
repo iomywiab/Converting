@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnum.php
  * Project: Converting
- * Modified at: 24/07/2025, 12:46
+ * Modified at: 26/07/2025, 13:04
  * Modified by: pnehls
  */
 
@@ -103,11 +103,26 @@ enum DataTypeEnum: string
     public function isScalar(): bool
     {
         return match ($this) {
+            // @phpstan-ignore voku.Match
             self::BOOLEAN,
+                // @phpstan-ignore voku.Match
             self::FLOAT,
+                // @phpstan-ignore voku.Match
             self::INTEGER,
+                // @phpstan-ignore voku.Match
             self::STRING => true,
-            default => false,
+            // @phpstan-ignore voku.Match
+            self::ARRAY,
+                // @phpstan-ignore voku.Match
+            self::NULL,
+                // @phpstan-ignore voku.Match
+            self::OBJECT,
+                // @phpstan-ignore voku.Match
+            self::RESOURCE,
+                // @phpstan-ignore voku.Match
+            self::RESOURCE_CLOSED,
+                // @phpstan-ignore voku.Match
+            self::UNKNOWN => false,
         };
     }
 
@@ -125,14 +140,25 @@ enum DataTypeEnum: string
     public function toPhpDocName(): ?string
     {
         return match ($this) {
+            // @phpstan-ignore voku.Match
             self::ARRAY => 'array',
+            // @phpstan-ignore voku.Match
             self::BOOLEAN => 'bool',
+            // @phpstan-ignore voku.Match
             self::FLOAT => 'float',
+            // @phpstan-ignore voku.Match
             self::INTEGER => 'int',
+            // @phpstan-ignore voku.Match
             self::NULL => 'null',
+            // @phpstan-ignore voku.Match
             self::OBJECT => 'object',
-            self::RESOURCE, 'resource',
+            // @phpstan-ignore voku.Match
+            self::RESOURCE => 'resource',
+            // @phpstan-ignore voku.Match
             self::STRING => 'string',
+            // @phpstan-ignore voku.Match
+            self::RESOURCE_CLOSED,
+                // @phpstan-ignore voku.Match
             self::UNKNOWN => null,
         };
     }
@@ -143,14 +169,26 @@ enum DataTypeEnum: string
     public function toSerializeMarker(): ?string
     {
         return match ($this) {
+            // @phpstan-ignore voku.Match
             self::ARRAY => 'a',
+            // @phpstan-ignore voku.Match
+            // @phpstan-ignore voku.Match
             self::BOOLEAN => 'b',
+            // @phpstan-ignore voku.Match
             self::FLOAT => 'd',
+            // @phpstan-ignore voku.Match
             self::INTEGER => 'i',
+            // @phpstan-ignore voku.Match
             self::NULL => 'N',
+            // @phpstan-ignore voku.Match
             self::OBJECT => 'O',
-            self::RESOURCE, self::RESOURCE_CLOSED => 'R',
+            // @phpstan-ignore voku.Match
+            self::RESOURCE,
+                // @phpstan-ignore voku.Match
+            self::RESOURCE_CLOSED => 'R',
+            // @phpstan-ignore voku.Match
             self::STRING => 's',
+            // @phpstan-ignore voku.Match
             self::UNKNOWN => null,
         };
     }

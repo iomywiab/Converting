@@ -3,15 +3,17 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: ConvertTest.php
  * Project: Converting
- * Modified at: 23/07/2025, 22:09
+ * Modified at: 26/07/2025, 14:56
  * Modified by: pnehls
  */
 
 declare(strict_types=1);
 
-namespace Iomywiab\Tests\Converting;
+namespace Iomywiab\Tests\Converting\Unit;
 
 use Iomywiab\Library\Converting\Convert;
+use Iomywiab\Library\Converting\Enums\DataTypeEnum;
+use Iomywiab\Library\Converting\Exceptions\ConvertException;
 use Iomywiab\Library\Converting\Exceptions\ConvertExceptionInterface;
 use Iomywiab\Library\Testing\DataTypes\Enum4Testing;
 use Iomywiab\Library\Testing\DataTypes\IntEnum4Testing;
@@ -22,12 +24,17 @@ use Iomywiab\Library\Testing\Values\DataProvider;
 use Iomywiab\Library\Testing\Values\Enums\SubstitutionEnum;
 use Iomywiab\Library\Testing\Values\Enums\TagEnum;
 use Iomywiab\Library\Testing\Values\Exceptions\TestValueExceptionInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Convert::class)]
+#[UsesClass(DataTypeEnum::class)]
+#[UsesClass(ConvertException::class)]
 class ConvertTest extends TestCase
 {
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return non-empty-array<array-key,mixed>
      * @throws TestValueExceptionInterface
      */
     public static function provideTestDataForBooleans(): array
@@ -69,7 +76,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return non-empty-array<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
@@ -101,7 +108,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return non-empty-array<array-key,mixed>
      * @throws TestValueExceptionInterface
      */
     public static function provideTestDataForFloats(): array
@@ -148,7 +155,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return non-empty-array<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
@@ -203,7 +210,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return non-empty-array<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
@@ -259,7 +266,7 @@ class ConvertTest extends TestCase
         return \array_merge(
             $data,
             DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedString' => 0],
+                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedString' => ''],
                 [],
                 [TagEnum::STRING]
             ),
@@ -277,7 +284,8 @@ class ConvertTest extends TestCase
     public function testToBool(bool $isValid, mixed $value, bool $expectedBool): void
     {
         try {
-            $hint = 'isValue='.($isValid ? 'true' : 'false').', value='.$value.', expectedBool='.($expectedBool ? 'true' : 'false');
+            $val = \is_scalar($value) ? (string)$value : \gettype($value);
+            $hint = 'isValue='.($isValid ? 'true' : 'false').', value='.$val.', expectedBool='.($expectedBool ? 'true' : 'false');
             self::assertSame($expectedBool, Convert::toBool($value), $hint);
             self::assertTrue($isValid, $hint);
         } catch (\Throwable $cause) {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00a74097d3425fe73ae65d331f39eff8",
+    "content-hash": "832116bbb1ddc5c205d5d7a2298de037",
     "packages": [],
     "packages-dev": [
         {
@@ -1628,16 +1628,16 @@
         },
         {
             "name": "iomywiab/testing",
-            "version": "v1.2.0-stable",
+            "version": "v1.3.1-stable",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iomywiab/Testing.git",
-                "reference": "a1530bfe1c70b6c9e4f02224476a886489386df8"
+                "reference": "81027572ad5fba1f4df7f337588eb4ab4c90b92b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iomywiab/Testing/zipball/a1530bfe1c70b6c9e4f02224476a886489386df8",
-                "reference": "a1530bfe1c70b6c9e4f02224476a886489386df8",
+                "url": "https://api.github.com/repos/iomywiab/Testing/zipball/81027572ad5fba1f4df7f337588eb4ab4c90b92b",
+                "reference": "81027572ad5fba1f4df7f337588eb4ab4c90b92b",
                 "shasum": ""
             },
             "require": {
@@ -1689,9 +1689,9 @@
             ],
             "support": {
                 "issues": "https://github.com/iomywiab/Testing/issues",
-                "source": "https://github.com/iomywiab/Testing/tree/v1.2.0-stable"
+                "source": "https://github.com/iomywiab/Testing/tree/v1.3.1-stable"
             },
-            "time": "2025-07-23T19:24:20+00:00"
+            "time": "2025-07-26T12:37:01+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -4639,12 +4639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0b1f127d644a2ff8af1c8bd2955dbe3c11812017"
+                "reference": "81355a1946c1cb0d4dd1966161015b8522f30173"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0b1f127d644a2ff8af1c8bd2955dbe3c11812017",
-                "reference": "0b1f127d644a2ff8af1c8bd2955dbe3c11812017",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/81355a1946c1cb0d4dd1966161015b8522f30173",
+                "reference": "81355a1946c1cb0d4dd1966161015b8522f30173",
                 "shasum": ""
             },
             "conflict": {
@@ -4841,7 +4841,7 @@
                 "elefant/cms": "<2.0.7",
                 "elgg/elgg": "<3.3.24|>=4,<4.0.5",
                 "elijaa/phpmemcacheadmin": "<=1.3",
-                "elmsln/haxcms": "<11.0.8",
+                "elmsln/haxcms": "<11.0.14",
                 "encore/laravel-admin": "<=1.8.19",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enhavo/enhavo-app": "<=0.13.1",
@@ -5591,7 +5591,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-22T16:07:09+00:00"
+            "time": "2025-07-25T21:05:39+00:00"
         },
         {
             "name": "sebastian/cli-parser",

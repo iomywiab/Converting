@@ -3,25 +3,27 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnumTest.php
  * Project: Converting
- * Modified at: 23/07/2025, 19:51
+ * Modified at: 26/07/2025, 14:54
  * Modified by: pnehls
  */
 
 declare(strict_types=1);
 
-namespace Iomywiab\Tests\Converting\Enums;
+namespace Iomywiab\Tests\Converting\Unit\Enums;
 
 use Iomywiab\Library\Converting\Enums\DataTypeEnum;
 use Iomywiab\Library\Testing\DataTypes\Enum4Testing;
 use Iomywiab\Library\Testing\DataTypes\IntEnum4Testing;
 use Iomywiab\Library\Testing\DataTypes\Stringable4Testing;
 use Iomywiab\Library\Testing\DataTypes\StringEnum4Testing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(DataTypeEnum::class)]
 class DataTypeEnumTest extends TestCase
 {
     /**
-     * @return array[]
+     * @return non-empty-list<non-empty-list<mixed>>
      */
     public static function provideDataForCases(): array
     {
@@ -137,16 +139,34 @@ class DataTypeEnumTest extends TestCase
     {
         $openResource = \fopen('php://memory', 'rb');
         self::assertSame(DataTypeEnum::RESOURCE, DataTypeEnum::fromData($openResource));
-        \fclose($openResource);
+        if (false !== $openResource) {
+            \fclose($openResource);
+        }
     }
 
     /**
+     * @return void
+     */
+    public function testIsScalar(): void
+    {
+        foreach (DataTypeEnum::cases() as $case) {
+            self::assertSame($case === DataTypeEnum::BOOLEAN || $case === DataTypeEnum::FLOAT || $case === DataTypeEnum::INTEGER || $case === DataTypeEnum::STRING, $case->isScalar());
+        }
+    }
+
+    /**
+     * @param bool $isValid
+     * @param mixed $value
+     * @param array<array-key,DataTypeEnum>|DataTypeEnum $expectedEnum
+     * @return void
      * @throws \Throwable
      * @dataProvider provideDataForNormalize
      */
     public function testNormalize(bool $isValid, mixed $value, array|DataTypeEnum $expectedEnum): void
     {
         try {
+            self::assertTrue(\is_array($value) || (\is_string($value) && '' !== $value) || $value instanceof DataTypeEnum);
+            // @phpstan-ignore argument.type
             $value = DataTypeEnum::normalize($value);
             if (\is_array($value)) {
                 foreach ($value as $item) {
@@ -154,7 +174,6 @@ class DataTypeEnumTest extends TestCase
                 }
                 self::assertEquals($expectedEnum, $value);
             } else {
-                self::assertInstanceOf(DataTypeEnum::class, $value);
                 self::assertSame($expectedEnum, $value);
             }
             self::assertTrue($isValid);
@@ -165,5 +184,20 @@ class DataTypeEnumTest extends TestCase
 
             throw $cause;
         }
+    }
+
+    public function testPhpDocName(): void
+    {
+        self::assertSame(DataTypeEnum::ARRAY->toPhpDocName(), 'array');
+        self::assertSame(DataTypeEnum::BOOLEAN->toPhpDocName(), 'bool');
+        self::assertSame(DataTypeEnum::FLOAT->toPhpDocName(), 'float');
+        self::assertSame(DataTypeEnum::INTEGER->toPhpDocName(), 'int');
+        self::assertSame(DataTypeEnum::NULL->toPhpDocName(), 'null');
+        self::assertSame(DataTypeEnum::OBJECT->toPhpDocName(), 'object');
+        self::assertSame(DataTypeEnum::RESOURCE->toPhpDocName(), 'resource');
+        self::assertSame(DataTypeEnum::STRING->toPhpDocName(), 'string');
+        self::assertSame(DataTypeEnum::RESOURCE_CLOSED->toPhpDocName(), null);
+        self::assertSame(DataTypeEnum::UNKNOWN->toPhpDocName(), null);
+
     }
 }

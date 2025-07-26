@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: ConvertException.php
  * Project: Converting
- * Modified at: 23/07/2025, 19:49
+ * Modified at: 26/07/2025, 12:52
  * Modified by: pnehls
  */
 
@@ -24,15 +24,22 @@ class ConvertException extends \Exception implements ConvertExceptionInterface
     {
         $valueType = DataTypeEnum::fromData($value);
         $from = match ($valueType) {
+            // @phpstan-ignore argument.type
             DataTypeEnum::ARRAY => 'array('.\count($value).')',
+            // @phpstan-ignore ternary.condNotBoolean
             DataTypeEnum::BOOLEAN => 'boolean:'.($value ? 'true' : 'false'),
+            // @phpstan-ignore binaryOp.invalid
             DataTypeEnum::FLOAT => 'float:'.$value,
+            // @phpstan-ignore binaryOp.invalid
             DataTypeEnum::INTEGER => 'integer:'.$value,
             DataTypeEnum::NULL => 'null',
+            // @phpstan-ignore argument.type
             DataTypeEnum::RESOURCE => 'resource:'.\get_resource_type($value),
             DataTypeEnum::RESOURCE_CLOSED,
             DataTypeEnum::UNKNOWN => $valueType->value,
+            // @phpstan-ignore argument.type
             DataTypeEnum::OBJECT => $this->getClassName($value),
+            // @phpstan-ignore binaryOp.invalid
             DataTypeEnum::STRING => '"'.$value.'"',
         };
 
