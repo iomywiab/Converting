@@ -4,8 +4,75 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "832116bbb1ddc5c205d5d7a2298de037",
-    "packages": [],
+    "content-hash": "ad905801fcb00f990d78e1591a7be4b7",
+    "packages": [
+        {
+            "name": "iomywiab/enums",
+            "version": "v1.0.2-stable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iomywiab/Enums.git",
+                "reference": "080a17b5a2639efc83cf8a51ad3d00d6587e8c0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iomywiab/Enums/zipball/080a17b5a2639efc83cf8a51ad3d00d6587e8c0e",
+                "reference": "080a17b5a2639efc83cf8a51ad3d00d6587e8c0e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1, <=8.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "nunomaduro/collision": "*",
+                "pdepend/pdepend": "*",
+                "phpcompatibility/php-compatibility": "*",
+                "phpmd/phpmd": "*",
+                "phpmetrics/phpmetrics": "*",
+                "phpstan/extension-installer": "*",
+                "phpstan/phpstan": "*",
+                "phpstan/phpstan-deprecation-rules": "*",
+                "phpstan/phpstan-phpunit": "*",
+                "phpstan/phpstan-strict-rules": "*",
+                "phpstan/phpstan-symfony": "*",
+                "phpunit/phpunit": "*",
+                "psalm/plugin-phpunit": "*",
+                "roave/security-advisories": "dev-latest",
+                "sebastian/phpcpd": "*",
+                "shipmonk/composer-dependency-analyser": "*",
+                "shipmonk/phpstan-baseline-per-identifier": "*",
+                "shipmonk/phpstan-rules": "*",
+                "voku/phpstan-rules": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Iomywiab\\Library\\Enums\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "iomywiab",
+                    "email": "u1.iomywiab@secana.de"
+                }
+            ],
+            "description": "Library for PHP enums",
+            "homepage": "https://github.com/iomywiab/Enums",
+            "keywords": [
+                "enum"
+            ],
+            "support": {
+                "issues": "https://github.com/iomywiab/Enums/issues",
+                "source": "https://github.com/iomywiab/Enums/tree/v1.0.2-stable"
+            },
+            "time": "2025-07-26T01:50:30+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "amphp/amp",
@@ -2106,16 +2173,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9"
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ae59794362fe85e051a58ad36b289443f57be7a9",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/221b0d0fdf1369c71047ad1d18bb5880017bbc56",
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56",
                 "shasum": ""
             },
             "require": {
@@ -2158,9 +2225,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.5.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.0"
             },
-            "time": "2025-05-31T08:24:38+00:00"
+            "time": "2025-07-27T20:03:57+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -3011,16 +3078,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.19",
+            "version": "2.1.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "473a8c30e450d87099f76313edcbb90852f9afdf"
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/473a8c30e450d87099f76313edcbb90852f9afdf",
-                "reference": "473a8c30e450d87099f76313edcbb90852f9afdf",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a9ccfef95210f92ba6feea6e8d1eef42b5605499",
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499",
                 "shasum": ""
             },
             "require": {
@@ -3065,7 +3132,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-21T19:58:24+00:00"
+            "time": "2025-07-26T20:45:26+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

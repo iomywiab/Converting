@@ -17,7 +17,8 @@
         }
     ],
     "require": {
-        "php": ">=8.1, <=8.5"
+        "php": ">=8.1, <=8.5",
+        "iomywiab/enums": "^1.0"
     },
     "require-dev": {
         "iomywiab/testing": "^1.3",

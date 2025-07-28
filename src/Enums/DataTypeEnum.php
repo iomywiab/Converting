@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnum.php
  * Project: Converting
- * Modified at: 26/07/2025, 13:04
+ * Modified at: 28/07/2025, 17:11
  * Modified by: pnehls
  */
 
@@ -11,8 +11,13 @@ declare(strict_types=1);
 
 namespace Iomywiab\Library\Converting\Enums;
 
-enum DataTypeEnum: string
+use Iomywiab\Library\Enums\Traits\ExtendedBackedEnumInterface;
+use Iomywiab\Library\Enums\Traits\ExtendedBackedEnumTrait;
+
+enum DataTypeEnum: string implements ExtendedBackedEnumInterface
 {
+    use ExtendedBackedEnumTrait;
+
     // all strings are compatible to \gettype()
     case ARRAY = 'array';
     case BOOLEAN = 'boolean';
