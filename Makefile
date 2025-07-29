@@ -3,6 +3,9 @@ SHELL := bash
 OS := $(shell uname)
 DEFAULT_CONTAINER := php-8.1-debug
 #PROJECT_POSTFIX=iomywiab-enums
+EXPECTED_VERSION := 1.1.0
+VERSION_URL := https://raw.githubusercontent.com/iomywiab/ProjectTemplate/refs/heads/main/version.txt
+
 
 .PHONY: help
 help: # print documentation from comments: https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -49,3 +52,35 @@ down: ## stop containers (composer, php, phpstan)
 .PHONY: vendor
 vendor: ## update the vendor directory
 	docker compose exec "$(DEFAULT_CONTAINER)" sh -c "composer update --no-interaction"
+
+.PHONY: check-version
+check-version: ## check if there is an update available for this script
+	@echo "Checking version from $(VERSION_URL)..."
+	@actual_version=$$(curl -sSfL $(VERSION_URL)); \
+	if [ "$$actual_version" = "$(EXPECTED_VERSION)" ]; then \
+		echo "Script is up-to-date: $$actual_version"; \
+	else \
+		echo "Update is available! This script: $(EXPECTED_VERSION), Found: $$actual_version" >&2; \
+		exit 1; \
+	fi
+
+.PHONY: cov
+cov: cov-xml cov-badge ## create a coverage file (tmp/phpstorm/coverage/cobertura.xml) and create the badge
+
+.PHONY: cov-xml
+cov-xml: ## create a coverage file (tmp/phpstorm/coverage/cobertura.xml)
+	docker compose exec "$(DEFAULT_CONTAINER)" sh -c "php -dxdebug.mode=coverage /opt/project/vendor/phpunit/phpunit/phpunit --coverage-cobertura /opt/phpstorm-coverage/cobertura.xml --configuration /opt/project/config/phpunit.xml /opt/project/tests"
+
+.PHONY: cov-badge
+cov-badge: ## create a coverage badge from existing coverage file (tmp/phpstorm/coverage/cobertura.xml)
+	mkdir -p ./docs
+	@COVERAGE_PERCENT=$$(xmllint --xpath 'string(/coverage/@line-rate)' tmp/phpstorm/coverage/cobertura.xml); \
+	COVERAGE_INT=$$(echo "$$COVERAGE_PERCENT * 100" | bc | xargs printf "%.0f"); \
+	COLOR=$$( \
+		if [ $$COVERAGE_INT -ge 90 ]; then echo "brightgreen"; \
+		elif [ $$COVERAGE_INT -ge 75 ]; then echo "yellow"; \
+		elif [ $$COVERAGE_INT -ge 50 ]; then echo "orange"; \
+		else echo "red"; fi \
+	); \
+	curl -s "https://img.shields.io/badge/Line_coverage-$$COVERAGE_INT%25-$$COLOR.svg" -o docs/coverage-badge.svg; \
+	echo "✅ Badge stored as docs/coverage-badge.svg"

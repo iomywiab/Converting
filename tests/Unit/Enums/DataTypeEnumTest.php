@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnumTest.php
  * Project: Converting
- * Modified at: 26/07/2025, 14:54
+ * Modified at: 29/07/2025, 14:13
  * Modified by: pnehls
  */
 
@@ -107,7 +107,7 @@ class DataTypeEnumTest extends TestCase
      * @dataProvider provideDataForFromValue
      * @throws \Throwable
      */
-    public function testFromValue(bool $isValid, mixed $value, DataTypeEnum $expectedEnum): void
+    public function testFromData(bool $isValid, mixed $value, DataTypeEnum $expectedEnum): void
     {
         try {
             self::assertSame($expectedEnum, DataTypeEnum::fromData($value));
@@ -123,7 +123,7 @@ class DataTypeEnumTest extends TestCase
 
     /**
      */
-    public function testFromValueForClosedResource(): void
+    public function testFromDataForClosedResource(): void
     {
         $closedResource = \fopen('php://memory', 'rb');
         if (false !== $closedResource) {
@@ -135,7 +135,7 @@ class DataTypeEnumTest extends TestCase
 
     /**
      */
-    public function testFromValueForResource(): void
+    public function testFromDataForResource(): void
     {
         $openResource = \fopen('php://memory', 'rb');
         self::assertSame(DataTypeEnum::RESOURCE, DataTypeEnum::fromData($openResource));
