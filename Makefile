@@ -3,7 +3,7 @@ SHELL := bash
 OS := $(shell uname)
 DEFAULT_CONTAINER := php-8.1-debug
 #PROJECT_POSTFIX=iomywiab-enums
-EXPECTED_VERSION := 1.1.0
+EXPECTED_VERSION := 1.3.0
 VERSION_URL := https://raw.githubusercontent.com/iomywiab/ProjectTemplate/refs/heads/main/version.txt
 
 
@@ -34,20 +34,16 @@ shell: ## run bash in Docker container "$(DEFAULT_CONTAINER)"
 	docker compose exec "$(DEFAULT_CONTAINER)" bash
 
 .PHONY: stan
-stan: ## run PHPStan in Docker container "phpstan"
+stan: up ## run PHPStan in Docker container "phpstan"
 	docker compose exec phpstan sh -c "php -d memory_limit=2G ./vendor/bin/phpstan --configuration=./config/phpstan.neon analyse"
 
 .PHONY: up
 up: ## start containers (composer, php, phpstan)
-	docker compose up -d composer &
-	docker compose up -d "$(DEFAULT_CONTAINER)" &
-	docker compose up -d phpstan &
+	docker compose up -d "composer"  "$(DEFAULT_CONTAINER)" "phpstan"
 
 .PHONY: down
 down: ## stop containers (composer, php, phpstan)
-	docker compose rm -f -s "composer" &
-	docker compose rm -f -s "$(DEFAULT_CONTAINER)" &
-	docker compose rm -f -s "phpstan"
+	docker compose rm -f -s "composer" "$(DEFAULT_CONTAINER)" "phpstan"
 
 .PHONY: vendor
 vendor: ## update the vendor directory
@@ -65,7 +61,7 @@ check-version: ## check if there is an update available for this script
 	fi
 
 .PHONY: cov
-cov: cov-xml cov-badge ## create a coverage file (tmp/phpstorm/coverage/cobertura.xml) and create the badge
+cov: up cov-xml cov-badge ## create a coverage file (tmp/phpstorm/coverage/cobertura.xml) and create the badge
 
 .PHONY: cov-xml
 cov-xml: ## create a coverage file (tmp/phpstorm/coverage/cobertura.xml)
@@ -83,4 +79,8 @@ cov-badge: ## create a coverage badge from existing coverage file (tmp/phpstorm/
 		else echo "red"; fi \
 	); \
 	curl -s "https://img.shields.io/badge/Line_coverage-$$COVERAGE_INT%25-$$COLOR.svg" -o docs/coverage-badge.svg; \
-	echo "✅ Badge stored as docs/coverage-badge.svg"
+	echo "✅ Line coverage badge stored as docs/coverage-badge.svg"
+	@TIMESTAMP_MS=$$(xmllint --xpath 'string(/coverage/@timestamp)' tmp/phpstorm/coverage/cobertura.xml); \
+	DATE=$$(date -u -r $$TIMESTAMP_MS "+%Y--%m--%d"); \
+	curl -s "https://img.shields.io/badge/Line_coverage-$$DATE-blue.svg" -o docs/coverage-date-badge.svg; \
+	echo "✅ coverage-date-badge.svg created for $$DATE"

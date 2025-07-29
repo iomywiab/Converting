@@ -1,29 +1,29 @@
 <!--
   - Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
-  - File name: coverage-badge.svg
+  - File name: coverage-date-badge.svg
   - Project: Converting
   - Modified at: 29/07/2025, 21:39
   - Modified by: pnehls
   -->
 
-<svg xmlns="http://www.w3.org/2000/svg" width="122" height="20" role="img" aria-label="Line coverage: 97%">
-    <title>Line coverage: 97%</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="162" height="20" role="img" aria-label="Line coverage: 2025-07-29">
+    <title>Line coverage: 2025-07-29</title>
     <linearGradient id="s" x2="0" y2="100%">
         <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
         <stop offset="1" stop-opacity=".1"/>
     </linearGradient>
     <clipPath id="r">
-        <rect width="122" height="20" rx="3" fill="#fff"/>
+        <rect width="162" height="20" rx="3" fill="#fff"/>
     </clipPath>
     <g clip-path="url(#r)">
         <rect width="87" height="20" fill="#555"/>
-        <rect x="87" width="35" height="20" fill="#4c1"/>
-        <rect width="122" height="20" fill="url(#s)"/>
+        <rect x="87" width="75" height="20" fill="#007ec6"/>
+        <rect width="162" height="20" fill="url(#s)"/>
     </g>
     <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
         <text aria-hidden="true" x="445" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="770">Line coverage</text>
         <text x="445" y="140" transform="scale(.1)" fill="#fff" textLength="770">Line coverage</text>
-        <text aria-hidden="true" x="1035" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="250">97%</text>
-        <text x="1035" y="140" transform="scale(.1)" fill="#fff" textLength="250">97%</text>
+        <text aria-hidden="true" x="1235" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="650">2025-07-29</text>
+        <text x="1235" y="140" transform="scale(.1)" fill="#fff" textLength="650">2025-07-29</text>
     </g>
 </svg>
