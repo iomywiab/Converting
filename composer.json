@@ -21,7 +21,7 @@
         "iomywiab/enums": "^1.2"
     },
     "require-dev": {
-        "iomywiab/testing": "^2.0",
+        "iomywiab/testing": "^2.2",
         "friendsofphp/php-cs-fixer": "*",
         "nunomaduro/collision": "*",
         "pdepend/pdepend": "*",

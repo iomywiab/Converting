@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7ee0532cecdf7476a8453d2b7a0bc28",
+    "content-hash": "67c8bc164aa722eb08543b835ce0a0e7",
     "packages": [
         {
             "name": "iomywiab/enums",
-            "version": "v1.2.2-stable",
+            "version": "v1.2.3-stable",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iomywiab/Enums.git",
-                "reference": "3319376dbac023018319e5a9b0de20c67e7dd4a4"
+                "reference": "62503ffa696ae5ef6a36fcd952b9c36525aab3ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iomywiab/Enums/zipball/3319376dbac023018319e5a9b0de20c67e7dd4a4",
-                "reference": "3319376dbac023018319e5a9b0de20c67e7dd4a4",
+                "url": "https://api.github.com/repos/iomywiab/Enums/zipball/62503ffa696ae5ef6a36fcd952b9c36525aab3ee",
+                "reference": "62503ffa696ae5ef6a36fcd952b9c36525aab3ee",
                 "shasum": ""
             },
             "require": {
@@ -25,6 +25,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "*",
+                "iomywiab/testing": "^2.1",
                 "nunomaduro/collision": "*",
                 "pdepend/pdepend": "*",
                 "phpcompatibility/php-compatibility": "*",
@@ -68,9 +69,9 @@
             ],
             "support": {
                 "issues": "https://github.com/iomywiab/Enums/issues",
-                "source": "https://github.com/iomywiab/Enums/tree/v1.2.2-stable"
+                "source": "https://github.com/iomywiab/Enums/tree/v1.2.3-stable"
             },
-            "time": "2025-07-29T19:35:45+00:00"
+            "time": "2025-07-30T12:11:37+00:00"
         }
     ],
     "packages-dev": [
@@ -1695,16 +1696,16 @@
         },
         {
             "name": "iomywiab/testing",
-            "version": "v2.1.0-stable",
+            "version": "v2.2.0-stable",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iomywiab/Testing.git",
-                "reference": "ca4f8d09434e10db04a76b9c664079901e3475db"
+                "reference": "e784c94f67a5df8c156adc9fe59ad159346950ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iomywiab/Testing/zipball/ca4f8d09434e10db04a76b9c664079901e3475db",
-                "reference": "ca4f8d09434e10db04a76b9c664079901e3475db",
+                "url": "https://api.github.com/repos/iomywiab/Testing/zipball/e784c94f67a5df8c156adc9fe59ad159346950ca",
+                "reference": "e784c94f67a5df8c156adc9fe59ad159346950ca",
                 "shasum": ""
             },
             "require": {
@@ -1756,9 +1757,9 @@
             ],
             "support": {
                 "issues": "https://github.com/iomywiab/Testing/issues",
-                "source": "https://github.com/iomywiab/Testing/tree/v2.1.0-stable"
+                "source": "https://github.com/iomywiab/Testing/tree/v2.2.0-stable"
             },
-            "time": "2025-07-30T09:29:48+00:00"
+            "time": "2025-07-30T16:12:47+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -4706,12 +4707,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "d7c8dd1164e41c2a9f1a1e7861c1fb081c04e635"
+                "reference": "3aaa2be71bcc17b49137b9e8ecd6619a5997b358"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/d7c8dd1164e41c2a9f1a1e7861c1fb081c04e635",
-                "reference": "d7c8dd1164e41c2a9f1a1e7861c1fb081c04e635",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/3aaa2be71bcc17b49137b9e8ecd6619a5997b358",
+                "reference": "3aaa2be71bcc17b49137b9e8ecd6619a5997b358",
                 "shasum": ""
             },
             "conflict": {
@@ -4766,7 +4767,7 @@
                 "backdrop/backdrop": "<1.27.3|>=1.28,<1.28.2",
                 "backpack/crud": "<3.4.9",
                 "backpack/filemanager": "<2.0.2|>=3,<3.0.9",
-                "bacula-web/bacula-web": "<8.0.0.0-RC2-dev",
+                "bacula-web/bacula-web": "<9.7.1",
                 "badaso/core": "<2.7",
                 "bagisto/bagisto": "<2.1",
                 "barrelstrength/sprout-base-email": "<1.2.7",
@@ -5659,7 +5660,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-29T21:05:36+00:00"
+            "time": "2025-07-30T14:07:45+00:00"
         },
         {
             "name": "sebastian/cli-parser",

@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnumTest.php
  * Project: Converting
- * Modified at: 30/07/2025, 12:50
+ * Modified at: 30/07/2025, 18:18
  * Modified by: pnehls
  */
 
@@ -14,6 +14,7 @@ namespace Iomywiab\Tests\Converting\Unit\Enums;
 use Iomywiab\Library\Converting\Enums\DataTypeEnum;
 use Iomywiab\Library\Testing\DataTypes\Enum4Testing;
 use Iomywiab\Library\Testing\DataTypes\IntEnum4Testing;
+use Iomywiab\Library\Testing\DataTypes\Resources4Testing;
 use Iomywiab\Library\Testing\DataTypes\Stringable4Testing;
 use Iomywiab\Library\Testing\DataTypes\StringEnum4Testing;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -118,19 +119,14 @@ class DataTypeEnumTest extends TestCase
      */
     public function testFromDataForClosedResource(): void
     {
-        $closedResource = \fopen('php://memory', 'rb');
-        if (false !== $closedResource) {
-            \fclose($closedResource);
-        }
-
-        self::assertSame(DataTypeEnum::RESOURCE_CLOSED, DataTypeEnum::fromData($closedResource));
+        self::assertSame(DataTypeEnum::RESOURCE_CLOSED, DataTypeEnum::fromData(Resources4Testing::getClosedMemoryStream()));
     }
 
     /**
      */
     public function testFromDataForResource(): void
     {
-        $openResource = \fopen('php://memory', 'rb');
+        $openResource = Resources4Testing::getOpenMemoryStream();
         self::assertSame(DataTypeEnum::RESOURCE, DataTypeEnum::fromData($openResource));
         if (false !== $openResource) {
             \fclose($openResource);
