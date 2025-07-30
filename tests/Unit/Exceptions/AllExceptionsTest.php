@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: AllExceptionsTest.php
  * Project: Converting
- * Modified at: 26/07/2025, 14:48
+ * Modified at: 30/07/2025, 12:44
  * Modified by: pnehls
  */
 
@@ -22,25 +22,16 @@ use PHPUnit\Framework\TestCase;
 class AllExceptionsTest extends TestCase
 {
     /**
-     * @return non-empty-list<non-empty-array<mixed>>
+     * @return \Generator<non-empty-array<mixed>>
      */
-    public static function provideTestData(): array
+    public static function provideTestData(): \Generator
     {
-        $validData = [
-            [['item'], DataTypeEnum::BOOLEAN, 'test', 'Error converting value. from=array(1) to=boolean',],
-            [true, DataTypeEnum::ARRAY, 'test', 'Error converting value. from=boolean:true to=array',],
-            [2.3, DataTypeEnum::ARRAY, 'test', 'Error converting value. from=float:2.3 to=array',],
-            [1, DataTypeEnum::ARRAY, 'test', 'Error converting value. from=integer:1 to=array',],
-            [new \stdClass(), DataTypeEnum::ARRAY, 'test', 'Error converting value. from=stdClass to=array',],
-            ['abc', DataTypeEnum::ARRAY, 'test', 'Error converting value. from="abc" to=array',],
-        ];
-
-        $data = [];
-        foreach ($validData as $dataset) {
-            $data[] = ['value' => $dataset[0], 'enum' => $dataset[1], 'exceptionMessage' => $dataset[2], 'expectedMessage' => $dataset[3]];
-        }
-
-        return $data;
+        yield ['value' => ['item'], 'enum' => DataTypeEnum::BOOLEAN, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from=array(1) to=boolean',];
+        yield ['value' => true, 'enum' => DataTypeEnum::ARRAY, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from=boolean:true to=array',];
+        yield ['value' => 2.3, 'enum' => DataTypeEnum::ARRAY, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from=float:2.3 to=array',];
+        yield ['value' => 1, 'enum' => DataTypeEnum::ARRAY, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from=integer:1 to=array',];
+        yield ['value' => new \stdClass(), 'enum' => DataTypeEnum::ARRAY, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from=stdClass to=array',];
+        yield ['value' => 'abc', 'enum' => DataTypeEnum::ARRAY, 'exceptionMessage' => 'test', 'expectedMessage' => 'Error converting value. from="abc" to=array',];
     }
 
     /**

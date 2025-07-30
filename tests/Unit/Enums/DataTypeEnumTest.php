@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: DataTypeEnumTest.php
  * Project: Converting
- * Modified at: 29/07/2025, 14:13
+ * Modified at: 30/07/2025, 12:50
  * Modified by: pnehls
  */
 
@@ -23,66 +23,59 @@ use PHPUnit\Framework\TestCase;
 class DataTypeEnumTest extends TestCase
 {
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return \Generator<array{type: DataTypeEnum, getTypeType: non-empty-string, serializeMarker: non-empty-string}>
      */
-    public static function provideDataForCases(): array
+    public static function provideDataForCases(): \Generator
     {
-        return [
-            [DataTypeEnum::ARRAY, 'array', 'a'],
-            [DataTypeEnum::BOOLEAN, 'boolean', 'b'],
-            [DataTypeEnum::FLOAT, 'double', 'd'],
-            [DataTypeEnum::INTEGER, 'integer', 'i'],
-            [DataTypeEnum::NULL, 'NULL', 'N'],
-            [DataTypeEnum::OBJECT, 'object', 'O'],
-            [DataTypeEnum::RESOURCE, 'resource', 'R'],
-            [DataTypeEnum::RESOURCE_CLOSED, 'resource (closed)', 'R'],
-            [DataTypeEnum::STRING, 'string', 's'],
-            [DataTypeEnum::UNKNOWN, 'unknown type', 'u'],
-        ];
+        yield ['type' => DataTypeEnum::ARRAY, 'getTypeType' => 'array', 'serializeMarker' => 'a'];
+        yield ['type' => DataTypeEnum::BOOLEAN, 'getTypeType' => 'boolean', 'serializeMarker' => 'b'];
+        yield ['type' => DataTypeEnum::FLOAT, 'getTypeType' => 'double', 'serializeMarker' => 'd'];
+        yield ['type' => DataTypeEnum::INTEGER, 'getTypeType' => 'integer', 'serializeMarker' => 'i'];
+        yield ['type' => DataTypeEnum::NULL, 'getTypeType' => 'NULL', 'serializeMarker' => 'N'];
+        yield ['type' => DataTypeEnum::OBJECT, 'getTypeType' => 'object', 'serializeMarker' => 'O'];
+        yield ['type' => DataTypeEnum::RESOURCE, 'getTypeType' => 'resource', 'serializeMarker' => 'R'];
+        yield ['type' => DataTypeEnum::RESOURCE_CLOSED, 'getTypeType' => 'resource (closed)', 'serializeMarker' => 'R'];
+        yield ['type' => DataTypeEnum::STRING, 'getTypeType' => 'string', 'serializeMarker' => 's'];
+        yield ['type' => DataTypeEnum::UNKNOWN, 'getTypeType' => 'unknown type', 'serializeMarker' => 'u'];
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return \Generator<array{isValid: bool, value: mixed, expectedEnum: DataTypeEnum}>
      */
-    public static function provideDataForFromValue(): array
+    public static function provideDataForFromValue(): \Generator
     {
-        return [
-            [true, [], DataTypeEnum::ARRAY],
-            [true, [1], DataTypeEnum::ARRAY],
-            [true, true, DataTypeEnum::BOOLEAN],
-            [true, false, DataTypeEnum::BOOLEAN],
-            [true, -1.2, DataTypeEnum::FLOAT],
-            [true, 0.0, DataTypeEnum::FLOAT],
-            [true, 1.2, DataTypeEnum::FLOAT],
-            [true, -3, DataTypeEnum::INTEGER],
-            [true, 0, DataTypeEnum::INTEGER],
-            [true, 3, DataTypeEnum::INTEGER],
-            [true, null, DataTypeEnum::NULL],
-            [true, new \stdClass(), DataTypeEnum::OBJECT],
-            [true, new \DateTime(), DataTypeEnum::OBJECT],
-            [true, Enum4Testing::ONE, DataTypeEnum::OBJECT],
-            [true, IntEnum4Testing::ONE, DataTypeEnum::OBJECT],
-            [true, StringEnum4Testing::ONE, DataTypeEnum::OBJECT],
-            [true, new Stringable4Testing(), DataTypeEnum::OBJECT],
-            [true, '', DataTypeEnum::STRING],
-            [true, 'abc', DataTypeEnum::STRING],
-        ];
+        yield ['isValid' => true, 'value' => [], 'expectedEnum' => DataTypeEnum::ARRAY];
+        yield ['isValid' => true, 'value' => [1], 'expectedEnum' => DataTypeEnum::ARRAY];
+        yield ['isValid' => true, 'value' => true, 'expectedEnum' => DataTypeEnum::BOOLEAN];
+        yield ['isValid' => true, 'value' => false, 'expectedEnum' => DataTypeEnum::BOOLEAN];
+        yield ['isValid' => true, 'value' => -1.2, 'expectedEnum' => DataTypeEnum::FLOAT];
+        yield ['isValid' => true, 'value' => 0.0, 'expectedEnum' => DataTypeEnum::FLOAT];
+        yield ['isValid' => true, 'value' => 1.2, 'expectedEnum' => DataTypeEnum::FLOAT];
+        yield ['isValid' => true, 'value' => -3, 'expectedEnum' => DataTypeEnum::INTEGER];
+        yield ['isValid' => true, 'value' => 0, 'expectedEnum' => DataTypeEnum::INTEGER];
+        yield ['isValid' => true, 'value' => 3, 'expectedEnum' => DataTypeEnum::INTEGER];
+        yield ['isValid' => true, 'value' => null, 'expectedEnum' => DataTypeEnum::NULL];
+        yield ['isValid' => true, 'value' => new \stdClass(), 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => new \DateTime(), 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => Enum4Testing::ONE, 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => IntEnum4Testing::ONE, 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => StringEnum4Testing::ONE, 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => new Stringable4Testing(), 'expectedEnum' => DataTypeEnum::OBJECT];
+        yield ['isValid' => true, 'value' => '', 'expectedEnum' => DataTypeEnum::STRING];
+        yield ['isValid' => true, 'value' => 'abc', 'expectedEnum' => DataTypeEnum::STRING];
     }
 
     /**
-     * @return non-empty-list<non-empty-list<mixed>>
+     * @return \Generator<non-empty-list<mixed>>
      */
-    public static function provideDataForNormalize(): array
+    public static function provideDataForNormalize(): \Generator
     {
-        $data = [];
-        $data[] = [false, 'xxx', DataTypeEnum::STRING];
-        $data[] = [true, ['string', 'integer'], [DataTypeEnum::STRING, DataTypeEnum::INTEGER]];
+        yield [false, 'xxx', DataTypeEnum::STRING];
+        yield [true, ['string', 'integer'], [DataTypeEnum::STRING, DataTypeEnum::INTEGER]];
         foreach (DataTypeEnum::cases() as $case) {
-            $data[] = [true, $case, $case];
-            $data[] = [true, $case->value, $case];
+            yield [true, $case, $case];
+            yield [true, $case->value, $case];
         }
-
-        return $data;
     }
 
     /**
@@ -186,6 +179,9 @@ class DataTypeEnumTest extends TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPhpDocName(): void
     {
         self::assertSame(DataTypeEnum::ARRAY->toPhpDocName(), 'array');
@@ -196,8 +192,7 @@ class DataTypeEnumTest extends TestCase
         self::assertSame(DataTypeEnum::OBJECT->toPhpDocName(), 'object');
         self::assertSame(DataTypeEnum::RESOURCE->toPhpDocName(), 'resource');
         self::assertSame(DataTypeEnum::STRING->toPhpDocName(), 'string');
-        self::assertSame(DataTypeEnum::RESOURCE_CLOSED->toPhpDocName(), null);
-        self::assertSame(DataTypeEnum::UNKNOWN->toPhpDocName(), null);
-
+        self::assertNull(DataTypeEnum::RESOURCE_CLOSED->toPhpDocName());
+        self::assertNull(DataTypeEnum::UNKNOWN->toPhpDocName());
     }
 }

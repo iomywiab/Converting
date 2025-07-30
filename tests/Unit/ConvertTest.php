@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: ConvertTest.php
  * Project: Converting
- * Modified at: 26/07/2025, 14:56
+ * Modified at: 30/07/2025, 12:48
  * Modified by: pnehls
  */
 
@@ -34,10 +34,10 @@ use PHPUnit\Framework\TestCase;
 class ConvertTest extends TestCase
 {
     /**
-     * @return non-empty-array<array-key,mixed>
+     * @return \Generator<array-key,mixed>
      * @throws TestValueExceptionInterface
      */
-    public static function provideTestDataForBooleans(): array
+    public static function provideTestDataForBooleans(): \Generator
     {
         $validData = [
             // boolean
@@ -60,27 +60,24 @@ class ConvertTest extends TestCase
             ['true', true],
         ];
 
-        $data = [];
         foreach ($validData as $item) {
-            $data[] = ['isValid' => true, 'value' => $item[0], 'expectedBool' => $item[1]];
+            yield ['isValid' => true, 'value' => $item[0], 'expectedBool' => $item[1]];
         }
 
-        return \array_merge(
-            $data,
-            DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedBool' => false],
-                [],
-                [TagEnum::BOOLEAN]
-            ),
+        // @phpstan-ignore shipmonk.checkedExceptionInYieldingMethod
+        yield from DataProvider::byTemplate(
+            ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedBool' => false],
+            [],
+            [TagEnum::BOOLEAN]
         );
     }
 
     /**
-     * @return non-empty-array<array-key,mixed>
+     * @return \Generator<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
-    public static function provideTestDataForDateTimes(): array
+    public static function provideTestDataForDateTimes(): \Generator
     {
         $timezone = new \DateTimeZone('UTC');
 
@@ -90,28 +87,24 @@ class ConvertTest extends TestCase
             [new \DateTime('2025-06-26', $timezone), new \DateTime('2025-06-26', $timezone)],
         ];
 
-        $data = [];
         foreach ($validData as $item) {
-            $data[] = ['isValid' => true, 'value' => $item[0], 'expectedDatetime' => $item[1]];
+            yield ['isValid' => true, 'value' => $item[0], 'expectedDatetime' => $item[1]];
         }
 
         $now = new \DateTime('now', $timezone);
-
-        return \array_merge(
-            $data,
-            DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedDatetime' => $now],
-                [],
-                [TagEnum::DATETIME]
-            ),
+        // @phpstan-ignore shipmonk.checkedExceptionInYieldingMethod
+        yield from DataProvider::byTemplate(
+            ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedDatetime' => $now],
+            [],
+            [TagEnum::DATETIME]
         );
     }
 
     /**
-     * @return non-empty-array<array-key,mixed>
+     * @return \Generator<array-key,mixed>
      * @throws TestValueExceptionInterface
      */
-    public static function provideTestDataForFloats(): array
+    public static function provideTestDataForFloats(): \Generator
     {
         $validData = [
             // boolean
@@ -139,27 +132,24 @@ class ConvertTest extends TestCase
             ['1', 1.0],
         ];
 
-        $data = [];
         foreach ($validData as $item) {
-            $data[] = ['isValid' => true, 'value' => $item[0], 'expectedFloat' => $item[1]];
+            yield ['isValid' => true, 'value' => $item[0], 'expectedFloat' => $item[1]];
         }
 
-        return \array_merge(
-            $data,
-            DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedFloat' => 0],
-                [],
-                [TagEnum::FLOAT, TagEnum::STRING_FLOAT]
-            ),
+        // @phpstan-ignore shipmonk.checkedExceptionInYieldingMethod
+        yield from DataProvider::byTemplate(
+            ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedFloat' => 0],
+            [],
+            [TagEnum::FLOAT, TagEnum::STRING_FLOAT]
         );
     }
 
     /**
-     * @return non-empty-array<array-key,mixed>
+     * @return \Generator<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
-    public static function provideTestDataForIntegers(): array
+    public static function provideTestDataForIntegers(): \Generator
     {
         $timezone = new \DateTimeZone('UTC');
 
@@ -194,27 +184,24 @@ class ConvertTest extends TestCase
             ['1', 1],
         ];
 
-        $data = [];
         foreach ($validData as $item) {
-            $data[] = ['isValid' => true, 'value' => $item[0], 'expectedInt' => $item[1]];
+            yield ['isValid' => true, 'value' => $item[0], 'expectedInt' => $item[1]];
         }
 
-        return \array_merge(
-            $data,
-            DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedInt' => 0],
-                [],
-                [TagEnum::INTEGER, TagEnum::ENUM_INT, TagEnum::STRING_INTEGER, TagEnum::STRING_FLOAT]
-            ),
+        // @phpstan-ignore shipmonk.checkedExceptionInYieldingMethod
+        yield from DataProvider::byTemplate(
+            ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedInt' => 0],
+            [],
+            [TagEnum::INTEGER, TagEnum::ENUM_INT, TagEnum::STRING_INTEGER, TagEnum::STRING_FLOAT]
         );
     }
 
     /**
-     * @return non-empty-array<array-key,mixed>
+     * @return \Generator<array-key,mixed>
      * @throws TestValueExceptionInterface
      * @throws \Exception
      */
-    public static function provideTestDataForString(): array
+    public static function provideTestDataForString(): \Generator
     {
         $timezone = new \DateTimeZone('UTC');
 
@@ -258,18 +245,15 @@ class ConvertTest extends TestCase
             ['1', '1'],
         ];
 
-        $data = [];
         foreach ($validData as $item) {
-            $data[] = ['isValid' => true, 'value' => $item[0], 'expectedString' => $item[1]];
+            yield ['isValid' => true, 'value' => $item[0], 'expectedString' => $item[1]];
         }
 
-        return \array_merge(
-            $data,
-            DataProvider::byTemplate(
-                ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedString' => ''],
-                [],
-                [TagEnum::STRING]
-            ),
+        // @phpstan-ignore shipmonk.checkedExceptionInYieldingMethod
+        yield from DataProvider::byTemplate(
+            ['isValid' => false, 'value' => SubstitutionEnum::VALUE, 'expectedString' => ''],
+            [],
+            [TagEnum::STRING]
         );
     }
 
