@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2025 Iomywiab/PN, Hamburg, Germany. All rights reserved
  * File name: ConvertException.php
  * Project: Converting
- * Modified at: 26/07/2025, 12:52
+ * Modified at: 30/07/2025, 18:21
  * Modified by: pnehls
  */
 
@@ -55,11 +55,13 @@ class ConvertException extends \Exception implements ConvertExceptionInterface
      */
     private function getClassName(object $object): string
     {
-        try {
-            $name = (new \ReflectionClass($object))->getShortName();
-        } catch (\Throwable $cause) {
-            $name = $cause->getMessage();
-        }
+        // we are trying to avoid reflection classes
+        //return (new \ReflectionClass($object))->getShortName();
+
+        $pos = \mb_strrpos($object::class, '\\');
+        $name = (false === $pos)
+            ? $object::class
+            : \mb_substr($object::class, $pos + 1);
 
         return ('' === $name) ? 'n/a' : $name;
     }
